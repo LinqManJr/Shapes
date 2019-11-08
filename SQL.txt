@@ -1,0 +1,26 @@
+create table dbo.products(
+  id float not null,
+  name varchar(255) null,
+
+  constraint pk_products_id primary key(id)
+);
+
+create table dbo.categories(
+  id float not null,
+  name varchar(255) null,
+
+  constraint pk_categories_id primary key(id)
+);
+
+create table dbo.products_categories(
+  product_id float not null,
+  category_id float not null,
+
+  constraint fk_products_categories_product_id foreign key (product_id) references dbo.products(id),
+  constraint fk_products_categories_category_id foreign key (category_id) references dbo.categories(id)
+);
+
+select p.name as prodName, c.name as catName
+from dbo.products p
+left join dbo.products_categories on p.id = products_categories.product_id
+left join dbo.categories c on products_categories.category_id = c.id
